@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <!-- Bootstrap 4 and Datatbles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.css"/>
+
+    <!-- JavaScript -->
+    <!-- jQuery first, Datatables and then Bootstrap 4 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+    <title>BSE Stocks</title>
+  </head>
+  <body>
+    <div class="container">
+      <button id="reload" type="button" class="btn btn-light">Refresh Data</button> Last updated: <span id="date">{{date}}</span>
+        <table id="stocks" class="table table-bordered table-hover text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Stock Name</th>
+              <th scope="col">Open</th>
+              <th scope="col">High</th>
+              <th scope="col">Low</th>
+              <th scope="col">Close</th>
+            </tr>
+          </thead>
+        </table>
+    </div>
+
+    <script>
+      function reload() {
+            $.ajax({url: "/apiv1/reload", success: function(date){
+              $("#date").text(date);
+              }});
+          }
+      $(document).ready(function() {
+          $('#stocks').DataTable({
+            serverSide: true,
+            ajax: {
+              "url": "apiv1/stocks",
+              "type": "post"
+            },
+            autoWidth: false,
+            language: {"search": "Enter stock name:"},
+            lengthChange: false,
+            pageLength: 10,
+            ordering: false,
+            info: false,
+            columnDefs: [
+              { "searchable": false, "targets": [0, 2, 3, 4, 5]}
+            ],
+            columns: [
+              { "data": "serial_number" },
+              { "data": "name" },
+              { "data": "open" },
+              { "data": "high" },
+              { "data": "low" },
+              { "data": "close" },
+            ]
+          });
+          $("button").click(reload);
+      } );
+    </script>
+  </body>
+</html>
