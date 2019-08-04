@@ -97,6 +97,7 @@ def search_redis(query_string, offset=0, maximum=10):
         count += 1
         stock = dict(
             serial_number=offset+count,
+            code=doc.id,
             name=doc.name,
             open=doc.open,
             high=doc.high,

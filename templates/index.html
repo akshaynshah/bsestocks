@@ -19,12 +19,15 @@
     <title>BSE Stocks</title>
   </head>
   <body>
-    <div class="container">
-      <button id="reload" type="button" class="btn btn-light">Refresh Data</button> Last updated: <span id="date">{{date}}</span>
+  <div class="container">
+    <button id="reload" type="button" class="btn btn-light">Refresh Data</button> Last updated: <span id="date">{{date}}</span>
+  </div>
+  <div class="container">
         <table id="stocks" class="table table-bordered table-hover text-center">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
+              <th scope="col">Stock Code</th>
               <th scope="col">Stock Name</th>
               <th scope="col">Open</th>
               <th scope="col">High</th>
@@ -59,6 +62,7 @@
             ],
             columns: [
               { "data": "serial_number" },
+              { "data": "code" },
               { "data": "name" },
               { "data": "open" },
               { "data": "high" },
